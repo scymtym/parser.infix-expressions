@@ -1,0 +1,14 @@
+#+TITLE:       infix-expressions README
+#+AUTHOR:      Jan Moringen
+#+EMAIL:       jmoringe@techfak.uni-bielefeld.de
+#+DESCRIPTION:
+#+KEYWORDS:    parser, expression, infix, esrap
+#+LANGUAGE:    en
+
+* Introduction
+* Tutorial
+
+* Settings                                                         :noexport:
+
+#+OPTIONS: H:2 num:nil toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS: TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
