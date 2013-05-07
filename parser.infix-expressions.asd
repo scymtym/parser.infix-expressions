@@ -43,7 +43,8 @@
   :license     "LLGPLv3; see COPYING file for details."
   :description "Provides parsing of Infix-Expressions expressions."
   :depends-on  (:alexandria
-                :let-plus)
+                (:version :let-plus "0.2")
+                (:version :esrap    "0.9"))
   :components  ((:module     "src"
                  :serial     t
                  :components ((:file       "package")
