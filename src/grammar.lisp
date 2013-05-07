@@ -120,7 +120,7 @@
     (or ))
 
 (define-expression-alternative whitespace space-tab-newline?
-    (? (* (or #\Space #\Tab #\Newline)) #+l whitespace))
+    (? (+ (or #\Space #\Tab #\Newline)) #+l whitespace))
 
 (defrule expr/parenthesis
     (and #\( whitespace-expr expr/no-parenthesis whitespace-expr #\))
