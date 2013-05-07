@@ -206,22 +206,3 @@
     (and (alpha-char-p character) (* (alphanumericp character)))
   (:lambda (characters)
     (make-identifier *builder* (text characters))))
-
-
-(let ((*builder*                   'list)
-      (*comment-expression*        :#)
-      (*disjunction-expression*    :||)
-      (*conjunction-expression*    :and)
-      (*negation-expression*       :not)
-      (*leaf-expression*           :literals-and-identifiers)
-      (*string-literal-expression* :double-quotes)
-      (*identifier-expression*     :alphanumeric))
-  (values
-   (defvar *ast* (parse 'expr "bla * u+u || (u||-u) and not  (u = u and u != u)"))
-   #+l(parse 'expr "#bla
-\"f\\\"oo\" * u+#foo
-u || (u||-u) and not  (u = u and u != u)"
-          #+l :grammar #+l '#:infix-expressions)))
-
-(with-output-to-string (stream)
-  (esrap::unparse 'expr *ast* stream))

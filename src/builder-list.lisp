@@ -10,7 +10,7 @@
   (list :comment content))
 
 (defmethod make-identifier ((builder (eql 'list)) (name string))
-  (intern name :cl-user))
+  (intern name :keyword))
 
 (defmethod make-operator/1 ((builder (eql 'list)) (op symbol) (arg t))
   (list op arg))

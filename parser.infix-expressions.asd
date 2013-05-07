@@ -51,4 +51,24 @@
                               (:file       "protocol")
                               (:file       "variables")
                               (:file       "grammar")
-                              (:file       "builder-list")))))
+                              (:file       "builder-list"))))
+
+  :in-order-to ((test-op (test-op :parser.infix-expressions-test))))
+
+(defsystem :parser.infix-expressions-test
+  :author      "Jan Moringen <jmoringe@techfak.uni-bielefeld.de>"
+  :maintainer  "Jan Moringen <jmoringe@techfak.uni-bielefeld.de>"
+  :version     #.(version/string)
+  :license     "LLGPLv3; see COPYING file for details."
+  :description "Tests for the parser.infix-expressions system."
+  :depends-on  (:alexandria
+                (:version :let-plus "0.2")
+
+                :eos)
+  :components  ((:module     "test"
+                 :serial     t
+                 :components ((:file       "package")
+                              (:file       "grammar")))))
+(defmethod perform ((operation test-op)
+                    (component (eql (find-system :parser.infix-expressions-test))))
+  (funcall (find-symbol "RUN-TESTS" :parser.infix-expressions.test)))
