@@ -150,17 +150,16 @@
 (defrule negation-expr
     (or equality-expr))
 
-(define-expression-alternative negation not
-    (and "not" whitespace-expr equality-expr)
-  (:destructure (not ws expr)
-    (declare (ignore not ws))
-    (make-operator/1 *builder* 'not expr)))
+(macrolet
+    ((define-negation-alternative (name keyword)
+       `(define-expression-alternative negation ,name
+            (and ,keyword whitespace-expr equality-expr)
+          (:destructure (keyword ws expr)
+            (declare (ignore keyword ws))
+            (make-operator/1 *builder* 'not expr)))))
 
-(define-expression-alternative negation !
-    (and "!" whitespace-expr equality-expr)
-  (:destructure (not ws expr)
-    (declare (ignore not ws))
-    (make-operator/1 *builder* 'not expr)))
+  (define-negation-alternative not "not")
+  (define-negation-alternative !   "!"))
 
 (define-binary-operator-rule (equality = (!= /=))
     relational-expr)
