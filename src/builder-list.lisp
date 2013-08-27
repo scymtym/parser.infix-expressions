@@ -6,17 +6,24 @@
 
 (cl:in-package #:parser.infix-expressions)
 
-(defmethod make-comment ((builder (eql 'list)) (content string))
-  (list :comment content))
+(defmethod make-node ((builder (eql 'list))
+                      (kind    (eql :comment))
+                      &key
+                      content)
+  (check-type content string)
+  (list :comment '() :content content))
 
-(defmethod make-identifier ((builder (eql 'list)) (name string))
-  (intern name :keyword))
+(defmethod make-node ((builder (eql 'list))
+                      (kind    (eql :identifier))
+                      &key
+                      name)
+  (check-type name string)
+  (list :identifier '() :name name))
 
-(defmethod make-operator/1 ((builder (eql 'list)) (op symbol) (arg t))
-  (list op arg))
-
-(defmethod make-operator/2 ((builder (eql 'list)) (op symbol) (left t) (right t))
-  (list op left right))
-
-(defmethod make-operator/3 ((builder (eql 'list)) (op symbol) (left t) (middle t) (right t))
-  (list op left middle right))
+(defmethod make-node ((builder (eql 'list))
+                      (kind    (eql :operator))
+                      &key
+                      name
+                      args)
+  (check-type name (or symbol string))
+  (list :operator args :operator name))

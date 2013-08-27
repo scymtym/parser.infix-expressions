@@ -1,4 +1,4 @@
-;;;; protocol.lisp ---
+;;;; protocol.lisp --- Protocol functions provided by the parser.infix-expressions.
 ;;;;
 ;;;; Copyright (C) 2012, 2013 Jan Moringen
 ;;;;
@@ -8,22 +8,9 @@
 
 ;;; Builder Protocol
 
-(defgeneric make-comment (builder content)
+(defgeneric make-node (builder kind &key bounds &allow-other-keys)
   (:documentation
-   "TODO(jmoringe): document"))
+   "Use BUILDER to make a syntax tree node of kind KIND and return it.
 
-(defgeneric make-identifier (builder name)
-  (:documentation
-   "TODO(jmoringe): document"))
-
-(defgeneric make-operator/1 (builder op arg)
-  (:documentation
-   "TODO(jmoringe): document"))
-
-(defgeneric make-operator/2 (builder op left right)
-  (:documentation
-   "TODO(jmoringe): document"))
-
-(defgeneric make-operator/3 (builder op left middle right)
-  (:documentation
-   "TODO(jmoringe): document"))
+    BOUNDS is of the form (START . END) and indicates the input range
+    for which the tree is constructed."))

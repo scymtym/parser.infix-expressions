@@ -93,9 +93,12 @@
                    (and ,right
                         whitespace-expr ,(string-downcase name) whitespace-expr
                         ,rule-name)
-                 (:destructure (left ws1 op ws2 right)
+                 (:destructure (left ws1 op ws2 right &bounds start end)
                    (declare (ignore ws1 op ws2))
-                   (make-operator/2 *builder* ',op left right)))))))
+                   (make-node *builder* :operator
+                              :name   ',op
+                              :args   (list left right)
+                              :bounds (cons start end))))))))
     `(progn
        ,@(mapcar (compose #'make-simple-rule #'ensure-list)
                  (or names (list name)))
@@ -154,9 +157,12 @@
     ((define-negation-alternative (name keyword)
        `(define-expression-alternative negation ,name
             (and ,keyword whitespace-expr equality-expr)
-          (:destructure (keyword ws expr)
+          (:destructure (keyword ws expr &bounds start end)
             (declare (ignore keyword ws))
-            (make-operator/1 *builder* 'not expr)))))
+            (make-node *builder* :operator
+                       :name   'not
+                       :args   (list expr)
+                       :bounds (cons start end))))))
 
   (define-negation-alternative not "not")
   (define-negation-alternative !   "!"))
@@ -178,9 +184,12 @@
 
 (defrule unary-multiplicative-expr
     (and #\- unary-expr)
-  (:destructure (minus expr)
+  (:destructure (minus expr &bounds start end)
     (declare (ignore minus))
-    (make-operator/1 *builder* '- expr)))
+    (make-node *builder* :operator
+               :name   '-
+               :args   (list expr)
+               :bounds (cons start end))))
 
 (defrule comment-and-leaf-expr
     (and (+ comment-expr) leaf-expr)
@@ -203,5 +212,7 @@
 
 (define-expression-alternative identifier alphanumeric
     (and (alpha-char-p character) (* (alphanumericp character)))
-  (:lambda (characters)
-    (make-identifier *builder* (text characters))))
+  (:lambda (characters &bounds start end)
+    (make-node *builder* :identifier
+               :name   (text characters)
+               :bounds (cons start end))))

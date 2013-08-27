@@ -23,11 +23,7 @@
 
   ;; Builder protocol
   (:export
-   #:make-comment
-   #:make-identifier
-   #:make-operator/1
-   #:make-operator/2
-   #:make-operator/3)
+   #:make-node)
 
   ;; Rules
   (:export
